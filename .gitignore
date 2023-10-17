@@ -10,6 +10,9 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 build
+.cmake
 
 .vscode
 .DS_Store
+.idea
+triforce

@@ -1,26 +1,16 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.14)
 project(triforce)
 
-set(CMAKE_CXX_STANDARD 20)
-string(APPEND CMAKE_CXX_FLAGS " -Wno-c++11-narrowing")
+set(CMAKE_CXX_STANDARD 14)
 
 include(FetchContent)
-Set(FETCHCONTENT_QUIET FALSE)
-set(BUILD_SHARED_LIBS FALSE)
 
+# sdl2
 FetchContent_Declare(
-        SDL2
+        sdl2
         GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-        GIT_TAG release-2.26.3
-        GIT_SHALLOW TRUE
-        GIT_PROGRESS TRUE
+        GIT_TAG        release-2.28.4
 )
-
-# FetchContent_Declare(
-#         sdl2
-#         GIT_REPOSITORY https://github.com/libsdl-org/sdl12-compat
-#         GIT_TAG        release-1.2.68
-# )
 FetchContent_GetProperties(sdl2)
 if(NOT sdl2_POPULATED)
     FetchContent_Populate(sdl2)
@@ -33,54 +23,93 @@ if(NOT sdl2_POPULATED)
     add_subdirectory(${sdl2_SOURCE_DIR} ${sdl2_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
-FetchContent_MakeAvailable(SDL2)
-
+# glm
 FetchContent_Declare(
-        SDL2_image
-        GIT_REPOSITORY https://github.com/libsdl-org/SDL_image.git
-        GIT_TAG release-2.6.3
+        glm
+        GIT_REPOSITORY https://github.com/g-truc/glm.git
+        GIT_TAG 0.9.9.8
         GIT_SHALLOW TRUE
         GIT_PROGRESS TRUE
 )
+FetchContent_MakeAvailable(glm)
 
-# Fix - for sdl2_image
-set(SDL2_IMAGE_CMAKELISTS "_deps/sdl2_image-src/CMakeLists.txt")
-file(READ "${SDL2_IMAGE_CMAKELISTS}" FILE_CONTENT)
-string(REPLACE "CMAKE_SOURCE_DIR" "CMAKE_CURRENT_SOURCE_DIR" FILE_CONTENT "${FILE_CONTENT}" )
-file(WRITE "${SDL2_IMAGE_CMAKELISTS}" "${FILE_CONTENT}")
+# glew
+FetchContent_Declare(
+        glew
+        GIT_REPOSITORY https://github.com/Perlmint/glew-cmake
+        GIT_TAG glew-cmake-2.2.0
+        GIT_SHALLOW TRUE
+        GIT_PROGRESS TRUE
+)
+FetchContent_GetProperties(glew)
+if(NOT glew_POPULATED)
+    FetchContent_Populate(glew)
+    set(glew-cmake_BUILD_SHARED OFF)
+    set(glew-cmake_BUILD_STATIC ON)
+    set(ONLY_LIBS ON)
+    add_subdirectory(${glew_SOURCE_DIR} ${glew_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
 
-# START ADDITION
-set(SDL2IMAGE_INSTALL OFF)
-set(BUILD_SHARED_LIBS FALSE)
-# END ADDITION
-
-FetchContent_MakeAvailable(SDL2_image)
-
-
-
-# FetchContent_Declare(
-#         GLM
-#         GIT_REPOSITORY https://github.com/g-truc/glm
-#         GIT_TAG 0.9.9.8
-#         GIT_SHALLOW TRUE
-#         GIT_PROGRESS TRUE
-# )
-# FetchContent_MakeAvailable(GLM)
-
-# message("GLM_SOURCE_DIR : ${GLM_SOURCE_DIR}")
-
-# FetchContent_Declare(
-#         GLEW
-#         GIT_REPOSITORY https://github.com/edoren/glew
-#         GIT_TAG v2.0.0
-#         GIT_SHALLOW TRUE
-#         GIT_PROGRESS TRUE
-# )
-# FetchContent_MakeAvailable(GLEW)
+find_package(OpenGL REQUIRED)
+if(${CMAKE_SYSTEM_NAME}  MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME}  MATCHES  "Windows")
+    find_package(GLEW REQUIRED)
+endif()
 
 
-# include_directories(glimac/include _deps/glm-src _deps/glew-src/include)
+add_executable(${PROJECT_NAME} src/main.cpp)
+include_directories(inc ${glm_SOURCE_DIR})
+add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
 
-add_executable(${PROJECT_NAME} triforce.cpp)
-target_link_libraries(${PROJECT_NAME} PUBLIC SDL2::SDL2main SDL2::SDL2-static SDL2_image::SDL2_image-static)
+message("sdl2_SOURCE_DIR: ${sdl2_SOURCE_DIR}
+glew_SOURCE_DIR: ${glew_SOURCE_DIR}
+glm_SOURCE_DIR: ${glm_SOURCE_DIR}
+")
 
+# see what platform we are on and set platform defines
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    add_definitions(-DGL_SILENCE_DEPRECATION)
+    target_link_libraries(${PROJECT_NAME} PRIVATE "-framework Metal")
+
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set ( PROJECT_LINK_LIBS -lGL)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    add_compile_definitions(_USE_MATH_DEFINES)
+    add_compile_definitions(NOMINMAX)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE /wd4251)
+endif()
+
+# add exe and link libs that must be after the other defines
+target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2-static OpenGL::GL)
+
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME}  MATCHES  "Windows")
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_LINK_LIBS} GLEW::GLEW glm)
+endif()
+
+target_include_directories(${PROJECT_NAME} PUBLIC 
+${sdl2_SOURCE_DIR}/include ${sdl2_BINARY_DIR}/include
+${glew_SOURCE_DIR}/include ${glew_BINARY_DIR}/include
+${glm_SOURCE_DIR}/include ${glm_BINARY_DIR}/include
+inc
+)
+
+# Link with dependencies
+# see what platform we are on and set platform defines
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    add_definitions(-DGL_SILENCE_DEPRECATION)
+    target_link_libraries(${PROJECT_NAME} PRIVATE "-framework Metal")
+
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set ( PROJECT_LINK_LIBS -lGL)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    add_compile_definitions(_USE_MATH_DEFINES)
+    add_compile_definitions(NOMINMAX)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE /wd4251)
+endif()
+
+
+# add exe and link libs that must be after the other defines
+target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2-static OpenGL::GL)
+
+if(${CMAKE_SYSTEM_NAME}  MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME}  MATCHES  "Windows")
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_LINK_LIBS} GLEW::GLEW glm)
+endif()
