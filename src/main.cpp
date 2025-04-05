@@ -62,10 +62,10 @@ int main(int argc, char **argv) {
     GLenum err = glewInit();
     if (GLEW_OK != err)
     {
-      std::cerr<<"Error: "<<glewGetErrorString(err)<<'\n';
+      std::cerr<<"Error: "<<glewGetErrorString(err) << std::endl;
       exit(EXIT_FAILURE);
     }
-    std::cerr<<"Status: Using GLEW"<< glewGetString(GLEW_VERSION)<<'\n';
+    std::cerr<<"Status: Using GLEW"<< glewGetString(GLEW_VERSION) << std::endl;
 #endif
 
 
@@ -223,8 +223,8 @@ SDL_GLContext createOpenGLContext(SDL_Window *window) {
 }
 
 void SDLErrorExit(const std::string &_msg) {
-    std::cerr << _msg << '\n';
-    std::cerr << SDL_GetError() << '\n';
+    std::cerr << _msg << std::endl;
+    std::cerr << SDL_GetError() << std::endl;
     SDL_Quit();
     exit(EXIT_FAILURE);
 }
