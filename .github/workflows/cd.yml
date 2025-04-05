@@ -22,14 +22,14 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt update -y
-          sudo apt install -y libgl1-mesa-dev libglew-dev cmake tar gzip
+          sudo apt install -y libgl1-mesa-dev libglew-dev libxext-dev cmake tar gzip
 
       - name: Build
         run: |
             cmake -S . -B build
             cmake --build build
 
-      - name: Build AppImage
+      - name: Compress binaries
         run: |
           tar -czf triforce-${{ runner.os }}-${{ runner.arch }}.tar.gz -C build triforce
 
