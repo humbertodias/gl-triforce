@@ -84,7 +84,7 @@ void printInfoLog(const GLuint &_obj, GLenum _mode = GL_COMPILE_STATUS) {
         infoLog = std::make_unique<char[]>(infologLength);
         glGetShaderInfoLog(_obj, infologLength, &charsWritten, &infoLog[0]);
 
-        std::cerr << infoLog << '\n';
+        std::cerr << infoLog.get() << std::endl;
         glGetShaderiv(_obj, _mode, &infologLength);
         if (infologLength == GL_FALSE) {
             if (_mode == GL_COMPILE_STATUS)

@@ -9,7 +9,7 @@ include(FetchContent)
 FetchContent_Declare(
         sdl2
         GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-        GIT_TAG        release-2.28.4
+        GIT_TAG        release-2.32.4
 )
 FetchContent_GetProperties(sdl2)
 if(NOT sdl2_POPULATED)
@@ -27,7 +27,7 @@ endif()
 FetchContent_Declare(
         glm
         GIT_REPOSITORY https://github.com/g-truc/glm.git
-        GIT_TAG 0.9.9.8
+        GIT_TAG 1.0.1
         GIT_SHALLOW TRUE
         GIT_PROGRESS TRUE
 )

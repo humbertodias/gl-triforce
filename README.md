@@ -1,6 +1,12 @@
 OpenGL Triforce
 ===
 
+Ubuntu dependencies
+```shell
+sudo apt update
+sudo apt install libgl1-mesa-dev libglew-dev
+```
+
 Build & Run
 ```shell
 cmake -S . -B build
