@@ -58,7 +58,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          brew install qt cmake ninja
+          brew install cmake glew
 
       - name: Build
         run: |
@@ -67,7 +67,7 @@ jobs:
 
       - name: Compress binaries
         run: |
-          ls -lha
+          ls -lha build
           tar -czf triforce-${{ runner.os }}-${{ runner.arch }}.tar.gz -C build trifoce
 
       - name: Create release
@@ -94,7 +94,7 @@ jobs:
 
      - name: Install Dependencies
        run: |
-         choco install -y cmake
+         choco install -y cmake glew
 
      - name: Build
        run: |
