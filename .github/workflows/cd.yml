@@ -58,7 +58,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          brew install cmake glew
+          brew install cmake
 
       - name: Build
         run: |
@@ -68,7 +68,7 @@ jobs:
       - name: Compress binaries
         run: |
           ls -lha build
-          tar -czf triforce-${{ runner.os }}-${{ runner.arch }}.tar.gz -C build trifoce
+          tar -czf triforce-${{ runner.os }}-${{ runner.arch }}.tar.gz -C build triforce
 
       - name: Create release
         if: success()
@@ -94,7 +94,7 @@ jobs:
 
      - name: Install Dependencies
        run: |
-         choco install -y cmake glew
+         choco install -y cmake
 
      - name: Build
        run: |
