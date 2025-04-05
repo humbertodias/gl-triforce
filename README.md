@@ -1,3 +1,5 @@
+[![CD](https://github.com/humbertodias/gl-triforce/actions/workflows/cd.yml/badge.svg)](https://github.com/humbertodias/gl-triforce/actions/workflows/cd.yml)
+
 OpenGL Triforce
 ===
 
