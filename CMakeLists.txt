@@ -4,7 +4,7 @@ project(triforce)
 set (CMAKE_CXX_STANDARD 14)
 
 # Dependencies managed by vcpkg (toolchain must be passed via command line)
-find_package(SDL2 CONFIG REQUIRED)
+find_package(sdl2 CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(OpenGL REQUIRED)
