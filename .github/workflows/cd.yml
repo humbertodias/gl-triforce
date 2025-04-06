@@ -24,7 +24,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt update -y
-          sudo apt install -y libgl1-mesa-dev pkg-config cmake tar gzip curl git zip autoconf automake autoconf-archive libltdl-dev libibus-1.0-dev
+          sudo apt install -y libgl1-mesa-dev pkg-config cmake tar gzip curl git zip autoconf automake autoconf-archive libltdl-dev libibus-1.0-dev libx11-dev libxft-dev libxext-dev
 
       - name: Build
         run: |
