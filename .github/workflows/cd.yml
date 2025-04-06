@@ -24,7 +24,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt update -y
-          sudo apt install -y libgl1-mesa-dev libglew-dev libxext-dev cmake tar gzip
+          sudo apt install -y libgl1-mesa-dev libglew-dev libxext-dev libxcrypt-dev cmake tar gzip
 
       - name: Build
         run: |
