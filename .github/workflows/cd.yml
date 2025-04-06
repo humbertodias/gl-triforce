@@ -24,7 +24,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt update -y
-          sudo apt install -y libgl1-mesa-dev libglew-dev libxext-dev libxcrypt-dev cmake tar gzip
+          sudo apt install -y libgl1-mesa-dev pkg-config cmake tar gzip curl git zip autoconf automake autoconf-archive libltdl-dev python3-jinja3 libibus-1.0-dev
 
       - name: Build
         run: |

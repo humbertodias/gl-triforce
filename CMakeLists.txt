@@ -33,7 +33,6 @@ endif()
 
 # Link required libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    SDL2::SDL2        # Use SDL2::SDL2-static if you installed the static version
     OpenGL::GL
     GLEW::GLEW
     glm::glm

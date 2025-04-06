@@ -3,6 +3,12 @@
 OpenGL Triforce
 ===
 
+Clone
+```shell
+git clone --recurse-submodules https://github.com/humbertodias/gl-triforce.git
+cd gl-triforce
+```
+
 Build & Run
 ```shell
 cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE=$PWD/vcpkg/scripts/buildsystems/vcpkg.cmake
