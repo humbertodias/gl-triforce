@@ -100,11 +100,11 @@ jobs:
         cd vcpkg
         bootstrap-vcpkg.bat
 
-     - name: Build with CMake and vcpkg
+     - name: Build with CMake
        shell: cmd
        run: |
         set VCPKG_ROOT=%CD%\vcpkg
-        %VCPKG_ROOT%\vcpkg install glew
+        %VCPKG_ROOT%\vcpkg install glew glm
         cmake -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_POLICY_VERSION_MINIMUM='3.5' -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake
         cmake --build build
 
