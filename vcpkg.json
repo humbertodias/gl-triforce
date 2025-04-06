@@ -1,0 +1,10 @@
+{
+    "name": "triforce",
+    "version": "0.1.0",
+    "dependencies": [
+      "glew",
+      "glm",
+      "sdl2"
+    ]
+  }
+  
