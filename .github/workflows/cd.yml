@@ -105,7 +105,7 @@ jobs:
        run: |
         set VCPKG_ROOT=%CD%\vcpkg
         %VCPKG_ROOT%\vcpkg install glew
-        cmake -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_POLICY_VERSION_MINIMUM='3.5 -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake
+        cmake -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_POLICY_VERSION_MINIMUM='3.5' -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake
         cmake --build build
 
      - name: Compress binaries (ZIP)
