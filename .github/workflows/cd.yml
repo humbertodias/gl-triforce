@@ -45,12 +45,6 @@ jobs:
         with:
           files: triforce-${{ runner.os }}-${{ runner.arch }}.tar.gz
 
-      - name: Upload release asset
-        uses: actions/upload-artifact@v4
-        with:
-          name: triforce-${{ runner.os }}-${{ runner.arch }}
-          path: triforce-${{ runner.os }}-${{ runner.arch }}.tar.gz
-
   macOS:
     runs-on: ${{ matrix.runner }}
     strategy:
@@ -82,12 +76,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: triforce-${{ runner.os }}-${{ runner.arch }}.tar.gz
-
-      - name: Upload release asset
-        uses: actions/upload-artifact@v4
-        with:
-          name: triforce-${{ runner.os }}-${{ runner.arch }}
-          path: triforce-${{ runner.os }}-${{ runner.arch }}.tar.gz
 
   windows:
    runs-on: ${{ matrix.runner }}
@@ -122,9 +110,3 @@ jobs:
        uses: softprops/action-gh-release@v2
        with:
          files: triforce-${{ runner.os }}-${{ runner.arch }}.zip
-
-     - name: Upload release asset
-       uses: actions/upload-artifact@v4
-       with:
-         name: triforce-${{ runner.os }}-${{ runner.arch }}
-         path: triforce-${{ runner.os }}-${{ runner.arch }}.zip
