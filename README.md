@@ -21,9 +21,11 @@ cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE=$PWD/vcpkg/scripts/buildsystems/vcpkg
 cmake --build build
 ./build/triforce
 ```
-
-
 ![output](https://github.com/humbertodias/jogl-zelda-triforce/raw/main/doc/triforce.gif)
+
+F = FullScreen W = Wireframe
+
+
 <!--
 ffmpeg -i input.mov -vf "fps=15,scale=900:-1:flags=lanczos" -c:v gif output.gif
 -->
